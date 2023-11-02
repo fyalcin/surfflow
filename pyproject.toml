@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "surfflow"
-version = "0.0.1-alpha"
+version = "1.0.0"
 description = "Calculate surface energies of arbitrary crystals."
 readme = "README.md"
 authors = [{ name = "Firat Yalcin", email = "firat.yalcin@univie.ac.at" },
