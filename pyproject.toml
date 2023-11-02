@@ -9,7 +9,8 @@ name = "surfflow"
 version = "0.0.1-alpha"
 description = "Calculate surface energies of arbitrary crystals."
 readme = "README.md"
-authors = [{ name = "Firat Yalcin", email = "firat.yalcin@univie.ac.at" }]
+authors = [{ name = "Firat Yalcin", email = "firat.yalcin@univie.ac.at" },
+            { name = "Michael Wolloch", email = "m.wolloch@gmail.com"}]
 license = { file = "LICENSE" }
 classifiers = [
     "License :: OSI Approved :: MIT License",
