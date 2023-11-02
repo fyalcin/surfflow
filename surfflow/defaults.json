@@ -1,0 +1,51 @@
+{
+  "comp_params": {
+    "use_vdw": false,
+    "functional": "PBE",
+    "use_spin": true,
+    "encut": 400,
+    "k_dens": 5.0,
+    "is_metal": null,
+    "epsilon": null
+  },
+  "sg_params": {
+    "miller": null,
+    "max_index": null,
+    "symmetrize": false,
+    "slab_thick": 8,
+    "vac_thick": 30.0,
+    "primitive": true,
+    "lll_reduce": true,
+    "tol": 0.05,
+    "max_normal_search": "max",
+    "resize": true,
+    "preserve_terminations": true,
+    "min_thick_A": 10.0,
+    "minimize_structures": false,
+    "match_ouc_lattice": true,
+    "calculate_bonds": true,
+    "center_slab": true,
+    "max_nsites": 100,
+    "filter_polar": true,
+    "nn_method": "all",
+    "weight": "BVS"
+  },
+  "sg_filter": {
+    "method": "all",
+    "bvs_param": null
+  },
+  "conv_params": {
+    "nelm": 3,
+    "conv_threshold": 0.01,
+    "thick_start": 6,
+    "thick_end": 20
+  },
+  "database_params": {
+    "bulk_coll": "bulk_data",
+    "surfen_coll": "surfen_data",
+    "conv_coll": "conv_data",
+    "wulff_coll": "wulff_data",
+    "db_file": "auto",
+    "high_level": true
+  }
+}

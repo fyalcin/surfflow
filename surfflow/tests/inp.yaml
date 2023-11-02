@@ -1,0 +1,28 @@
+mpid: mp-149
+comp_params:
+  encut: 320
+custom_id: null
+functional: PBE
+sg_filter:
+  method: all
+sg_params:
+  calculate_bonds: true
+  lll_reduce: true
+  match_ouc_lattice: false
+  max_normal_search: max
+  max_nsites: 100
+  miller:
+    - 001
+  min_thick_A: 0
+  minimize_structures: false
+  nn_method: all
+  preserve_terminations: true
+  primitive: true
+  resize: true
+  slab_thick: 4
+  symmetrize: false
+  tol: 0.1
+  vac_thick: 20
+  weight: BVS
+db_file: /home/yalcin/config_local/db.json
+high_level: refactor_test
