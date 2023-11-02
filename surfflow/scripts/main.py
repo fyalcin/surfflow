@@ -74,23 +74,23 @@ def safe_open_w(path):
 
 def cli(argv: Optional[Sequence[str]] = None) -> int:
     """
-    Command line interface to Surfen.
+    Command line interface to SurfFlow.
     :param argv: Arguments passed to the CLI.
     :type argv: Optional[Sequence[str]]
 
     :return: 0 if successful.
     :rtype: int
     """
-    m_description = "A command line interface to Surfen. For more help on a specific command, type 'surfflow <command> -h'."
+    m_description = "A command line interface to SurfFlow. For more help on a specific command, type 'surfflow <command> -h'."
 
     parser = ArgumentParser("surfflow", description=m_description)
-    surfen_version = metadata.version("surfflow")
-    parser.add_argument("-v", "--version", action="version", version=surfen_version)
+    surfflow_version = metadata.version("surfflow")
+    parser.add_argument("-v", "--version", action="version", version=surfflow_version)
 
     subparsers = parser.add_subparsers(help="command", dest="command")
 
     config_parser = subparsers.add_parser(
-        "config", help="Generate config files required for running Surfen"
+        "config", help="Generate config files required for running SurfFlow"
     )
     config_parser.add_argument(
         "init",
@@ -328,11 +328,11 @@ def generate_fworker_config() -> None:
 
 def generate_config() -> int:
     """
-    Generate the configuration files for SURFEN.
+    Generate the configuration files for SurfFlow.
     """
-    print(f"{Color.BOLD}Welcome to the SURFEN configuration generator!{Color.END}")
+    print(f"{Color.BOLD}Welcome to the SurfFlow configuration generator!{Color.END}")
     print(
-        f"{Color.BOLD}This script will help you generate the necessary configuration files for SURFEN.{Color.END}"
+        f"{Color.BOLD}This script will help you generate the necessary configuration files for SurfFlow.{Color.END}"
     )
     print(f"{Color.BOLD}Please choose your action:{Color.END}\n")
 

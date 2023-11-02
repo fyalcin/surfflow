@@ -19,13 +19,13 @@ on [pymatgen](https://pymatgen.org/), [atomate](https://atomate.org/), and the [
 
 ## Download and Installation <a name="install"></a>
 
-We recommend installing surfflow inside a virtual python environment. We use [mamba](https://github.com/mamba-org/mamba) in this guide,
+We recommend installing surfflow inside a virtual python environment. We use [mamba](https://github.com/mamba-org/mamba) in this guide to create and manage environments,
 but [conda](https://docs.conda.io/en/latest/), [virtualenv](https://virtualenv.pypa.io/en/latest/), or similar are also possible. We currently
-recommend mamba because it is essentially conda, but with much faster environment solving and package installation. If you prefer to proceed with
-conda instead, you can just replace all the mamba commands with conda. In fact, in the later sections of this guide, we use mamba and conda
+recommend **mamba** because it is essentially **conda**, but with much faster environment solving and package installation. If you prefer to proceed with
+conda instead, you can just replace all the `mamba` commands with `conda`. In fact, in the later sections of this guide, we use mamba and conda
 interchangeably in some commands and when referring to environments.
 
-### Create a virtual environment for surfflow <a name="virtualenv"></a>
+### Create a virtual environment for SurfFlow <a name="virtualenv"></a>
 
 1. Make sure that you have mamba installed or download and install mambaforge from [here](https://github.com/conda-forge/miniforge). If you already
    have conda installed, you can also install mamba by running `conda install mamba -n base -c conda-forge`.
@@ -34,6 +34,16 @@ interchangeably in some commands and when referring to environments.
 3. Switch to your new environment: `mamba activate surfflow`
 
 [Back to top](#toc)
+
+### Install SurfFlow from PyPi <a name="pypi"></a>
+
+Simply install surfflow from PyPi with the following command
+
+`pip install surfflow`
+
+**Note**: `atomate` is a dependency of the `surfflow` package. However, due to some changes that either fix certain bugs or add necessary functionality yet to be implemented in the official atomate version, we use a slightly modified fork of `atomate`. This fork should be installed with
+
+`pip install git+atomate@git+https://github.com/fyalcin/atomate.git`
 
 ### Install and configure MongoDB locally if you want your database to run also in conda environment<a name="mongodb"></a>
 

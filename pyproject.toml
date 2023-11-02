@@ -23,7 +23,7 @@ dependencies = [
     "custodian",
     "fireworks",
     "streamlit",
-    "atomate@git+https://github.com/fyalcin/atomate.git",
+    "htflow-utils",
     "custodian",
     "emmet",
 ]
