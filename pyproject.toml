@@ -36,7 +36,7 @@ universal = true
 surfflow_tool = "surfflow.scripts.main:cli"
 
 [tool.bumpver]
-current_version = "0.0.1-alpha"
+current_version = "1.0.0"
 version_pattern = "MAJOR.MINOR.PATCH[-TAG]"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true

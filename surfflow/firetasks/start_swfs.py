@@ -52,12 +52,7 @@ class StartSurfaceEnergy(FiretaskBase):
         "comp_params",
         "sg_params",
         "sg_filter",
-        "db_file",
-        "high_level",
-        "custom_id",
-        "surfen_coll",
-        "bulk_coll",
-        "add_full_relax",
+        "database_params",
     ]
 
     def run_task(self, fw_spec):

@@ -24,5 +24,6 @@ sg_params:
   tol: 0.1
   vac_thick: 20
   weight: BVS
-db_file: /home/yalcin/config_local/db.json
-high_level: refactor_test
+database_params:
+  db_file: auto
+  high_level: true

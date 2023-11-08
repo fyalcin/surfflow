@@ -1,5 +1,4 @@
 import logging
-from typing import Union, Optional
 
 from fireworks import Firework, Workflow
 
@@ -7,6 +6,7 @@ from surfflow.firetasks.surfen_tools import (
     RelaxSurfaceEnergyInputs,
     WriteSurfaceEnergiesToDB,
     FullyRelaxSlab,
+    GenerateOptimadeEntry
 )
 from surfflow.utils.db_tools import VaspDB
 from surfflow.utils.surfen_tools import (
@@ -18,16 +18,11 @@ logger = logging.getLogger(__name__)
 
 
 def surface_energy_swf(
-    mpid: str,
-    sg_params: dict,
-    sg_filter: dict,
-    db_file: str,
-    high_level: Union[str, bool],
-    comp_params: dict,
-    custom_id: Optional[str],
-    bulk_coll: str,
-    surfen_coll: str,
-    add_full_relax: bool = True,
+        mpid: str,
+        comp_params: dict,
+        sg_params: dict,
+        sg_filter: dict,
+        database_params: dict,
 ) -> tuple[list[Workflow], list]:
     """
     Create a workflow for calculating surface energies.
@@ -68,6 +63,12 @@ def surface_energy_swf(
     :return: List of workflows.
     :rtype: list[Workflow]
     """
+    db_file = database_params["db_file"]
+    high_level = database_params["high_level"]
+    bulk_coll = database_params["bulk_coll"]
+    surfen_coll = database_params["surfen_coll"]
+    custom_id = database_params.get("custom_id", None)
+    add_full_relax = database_params.get("add_full_relax", True)
     inputs_list = get_surfen_inputs_from_mpid(
         mpid=mpid,
         bulk_coll=bulk_coll,
@@ -98,14 +99,14 @@ def surface_energy_swf(
 
 
 def surface_energy_swf_from_slab_dict(
-    mpid,
-    slab_dict,
-    surfen_coll,
-    db_file,
-    high_level,
-    sg_params,
-    comp_params,
-    add_full_relax,
+        mpid,
+        slab_dict,
+        surfen_coll,
+        db_file,
+        high_level,
+        sg_params,
+        comp_params,
+        add_full_relax,
 ):
     functional = comp_params["functional"]
     metadata = {"mpid": mpid, "functional": functional}
@@ -155,11 +156,20 @@ def surface_energy_swf_from_slab_dict(
             db_file=db_file,
             high_level=high_level,
         ),
+        parents=fw1,
         name=f"Calculate the surface energies for {mpid}-{hkl}-{uid_short} with {functional} and put into DB.",
     )
 
+    fw3 = Firework(GenerateOptimadeEntry(fltr=fltr,
+                                         surfen_coll=surfen_coll,
+                                         db_file=db_file,
+                                         high_level=high_level),
+                   parents=fw2,
+                   name=f"Generate OPTIMADE entry for {mpid}-{hkl}-{uid_short} with {functional} and put into DB.",
+                   )
+
     if add_full_relax:
-        fw3 = Firework(
+        fw4 = Firework(
             FullyRelaxSlab(
                 input_dict=slab_dict,
                 fltr=fltr,
@@ -168,18 +178,17 @@ def surface_energy_swf_from_slab_dict(
                 db_file=db_file,
                 high_level=high_level,
             ),
+            parents=fw2,
             name=f"Fully relax the slab for {mpid}-{hkl}-{uid_short} with {functional}",
         )
 
         wf = Workflow(
-            fireworks=[fw1, fw2, fw3],
-            links_dict={fw1.fw_id: [fw2.fw_id, fw3.fw_id]},
+            fireworks=[fw1, fw2, fw3, fw4],
             name=f"Surface energy SWF for {mpid}-{hkl}-{uid_short} with {functional}.",
         )
     else:
         wf = Workflow(
-            fireworks=[fw1, fw2],
-            links_dict={fw1.fw_id: [fw2.fw_id]},
+            fireworks=[fw1, fw2, fw3],
             name=f"Surface energy SWF for {mpid}-{hkl}-{uid_short} with {functional}.",
         )
 
