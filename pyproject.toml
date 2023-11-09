@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "surfflow"
-version = "1.0.1"
+version = "1.0.2"
 description = "Calculate surface energies of arbitrary crystals."
 readme = "README.md"
 authors = [{ name = "Firat Yalcin", email = "firat.yalcin@univie.ac.at" },
@@ -36,7 +36,7 @@ universal = true
 surfflow_tool = "surfflow.scripts.main:cli"
 
 [tool.bumpver]
-current_version = "1.0.1"
+current_version = "1.0.2"
 version_pattern = "MAJOR.MINOR.PATCH[-TAG]"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
