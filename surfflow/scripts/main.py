@@ -10,7 +10,7 @@ from fireworks.core.launchpad import LaunchPad
 
 from surfflow.scripts.submit import submit
 
-DEFAULT_CONF_PATH = os.path.expanduser("~") + "/config2"
+DEFAULT_CONF_PATH = os.path.expanduser("~") + "/config"
 DEFAULT_LPAD_YAML = "my_launchpad.yaml"
 
 if sys.version_info < (3, 8):
@@ -81,7 +81,8 @@ def cli(argv: Optional[Sequence[str]] = None) -> int:
     :return: 0 if successful.
     :rtype: int
     """
-    m_description = "A command line interface to SurfFlow. For more help on a specific command, type 'surfflow <command> -h'."
+    m_description = "A command line interface to SurfFlow. For more help on a specific command, type 'surfflow " \
+                    "<command> -h'."
 
     parser = ArgumentParser("surfflow", description=m_description)
     surfflow_version = metadata.version("surfflow")
@@ -94,7 +95,7 @@ def cli(argv: Optional[Sequence[str]] = None) -> int:
     )
     config_parser.add_argument(
         "init",
-        type=str,
+        choices=["init"],
         help=f"Start the configuration wizard to generate files in the chosen directory.",
     )
     config_parser.set_defaults(func=generate_config)
@@ -129,11 +130,16 @@ def cli(argv: Optional[Sequence[str]] = None) -> int:
     submit_parser.set_defaults(func=submit)
 
     args = parser.parse_args(argv)
+    print(args)
+    print("testastat")
     if args.command is None:
         # if no command supplied, print help
         parser.print_help()
-    else:
+    elif args.command == "submit":
+        print(args)
         args.func(args)
+    elif args.command == "config" and args.init:
+        generate_config()
 
     return 0
 
@@ -330,6 +336,7 @@ def generate_config() -> int:
     """
     Generate the configuration files for SurfFlow.
     """
+    # check if the init argument it True, otherwise print help
     print(f"{Color.BOLD}Welcome to the SurfFlow configuration generator!{Color.END}")
     print(
         f"{Color.BOLD}This script will help you generate the necessary configuration files for SurfFlow.{Color.END}"
