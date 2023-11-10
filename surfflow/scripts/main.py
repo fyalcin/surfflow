@@ -130,8 +130,6 @@ def cli(argv: Optional[Sequence[str]] = None) -> int:
     submit_parser.set_defaults(func=submit)
 
     args = parser.parse_args(argv)
-    print(args)
-    print("testastat")
     if args.command is None:
         # if no command supplied, print help
         parser.print_help()
