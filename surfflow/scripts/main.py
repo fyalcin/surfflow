@@ -5,6 +5,7 @@ import sys
 from argparse import ArgumentParser
 from typing import Dict, Optional, Sequence, Union
 
+import colorful as cf
 import yaml
 from fireworks.core.launchpad import LaunchPad
 
@@ -22,10 +23,8 @@ else:
 def set_default_config_path() -> str:
     fw_config_file = os.environ.get("FW_CONFIG_FILE")
     if fw_config_file:
-        print(
-            f"WARN: Existing configuration directory found at {os.path.dirname(fw_config_file)}. "
-            f"You have the option to change this directory."
-        )
+        print(cf.bold_red(f"WARNING: Existing configuration directory found at {os.path.dirname(fw_config_file)}. "
+                          f"This is set as the default option below."))
         default_path = os.path.dirname(fw_config_file)
     else:
         default_path = DEFAULT_CONF_PATH
@@ -148,27 +147,20 @@ def generate_init_config() -> None:
     """
     fw_config_file = os.environ.get("FW_CONFIG_FILE")
     if fw_config_file:
-        prompt = input(
-            f"Existing configuration directory found at {os.path.dirname(fw_config_file)}. "
-            f"You can define another configuration folder and overwrite this variable. "
-            f"Do you want to continue? (y/n) "
-        )
+        prompt = input(cf.red(f"Existing configuration directory found at {os.path.dirname(fw_config_file)}.\n"
+                              f"You can define another configuration folder and overwrite this variable. "
+                              f"Do you want to continue? (y/n) "))
     else:
         prompt = "y"
 
     if prompt == "y":
-        path = input(
-            f"Enter path to where you want to save the configuration files."
-            f" If you already have a configuration folder, you can input that to set it "
-            f"as a conda environment variable instead. (default: {DEFAULT_CONF_PATH}): "
-        )
+        path = input(cf.bold_white(f"Enter the full path for the the configuration file directory. (default: "
+                                   f"{DEFAULT_CONF_PATH}): "))
         path = path or DEFAULT_CONF_PATH
         with safe_open_w(os.path.join(path, "FW_config.yaml")) as f:
             f.write(f"CONFIG_FILE_DIR: {path}")
-        print(f"Configuration directory initialized at {path}!")
-        print(
-            "Would you like to set the conda environment variable for the config file?"
-        )
+        print(cf.bold_green(f"Configuration directory initialized at {path}!"))
+        print("Would you like to set the conda environment variable for the config file?")
         while True:
             inp = input("[Y/n]: ")
             if inp in ["y", "Y", ""]:
@@ -177,6 +169,8 @@ def generate_init_config() -> None:
                     f"conda env config vars set FW_CONFIG_FILE={os.path.join(path, 'FW_config.yaml')}",
                     shell=True,
                 )
+                print(cf.bold_green("Conda environment variable set!"))
+                print("Note: This change will only take effect upon reactivation of the conda environment.")
                 break
             elif inp in ["n", "N"]:
                 break
@@ -219,7 +213,7 @@ def generate_lpad_config() -> None:
     )
 
     print("Please supply the following configuration values")
-    print("(press Enter if you want to accept the defaults)\n")
+    print("(press Enter if you want to accept the default value)\n")
     default_path = set_default_config_path()
     path = input(
         f"Enter path to where you want to save the launchpad configuration file. (default: {default_path}): "
@@ -264,7 +258,7 @@ def generate_db_config() -> None:
     )
 
     print("Please supply the following configuration values")
-    print("(press Enter if you want to accept the defaults)\n")
+    print("(press Enter if you want to accept the default value)\n")
     default_path = set_default_config_path()
     path = input(
         f"Enter path to where you want to save the database configuration file. (default: {default_path}): "
@@ -275,7 +269,7 @@ def generate_db_config() -> None:
     with safe_open_w(os.path.join(path, "db.json")) as f:
         json.dump(doc, f, indent=4)
 
-    print(f"\nConfiguration written to {os.path.join(path, 'db.json')}!\n")
+    print(cf.bold_green(f"\nConfiguration written to {os.path.join(path, 'db.json')}!\n"))
 
 
 def generate_fworker_config() -> None:
@@ -327,7 +321,7 @@ def generate_fworker_config() -> None:
     with safe_open_w(os.path.join(path, "my_fworker.yaml")) as outfile:
         yaml.dump(fworker_doc, outfile, default_flow_style=False)
 
-    print(f"\nConfiguration written to {os.path.join(path, 'my_fworker.yaml')}!\n")
+    print(cf.bold_green(f"\nConfiguration written to {os.path.join(path, 'my_fworker.yaml')}!\n"))
 
 
 def generate_config() -> int:
@@ -335,21 +329,19 @@ def generate_config() -> int:
     Generate the configuration files for SurfFlow.
     """
     # check if the init argument it True, otherwise print help
-    print(f"{Color.BOLD}Welcome to the SurfFlow configuration generator!{Color.END}")
-    print(
-        f"{Color.BOLD}This script will help you generate the necessary configuration files for SurfFlow.{Color.END}"
-    )
-    print(f"{Color.BOLD}Please choose your action:{Color.END}\n")
+    print(cf.bold_coral("### Welcome to the SurfFlow configuration generator! ###"))
+    print("This script will help you generate the necessary configuration files for SurfFlow.")
+    print("Please choose your action:\n")
 
     while True:
-        choice = input(
-            f"{Color.BOLD}(1/init)     initialize/set configuration directory{Color.END}\n"
-            f"{Color.BOLD}(2/lpad)     generate my_launchpad.yaml file{Color.END}\n"
-            f"{Color.BOLD}(3/db)       generate db.json file{Color.END}\n"
-            f"{Color.BOLD}(4/fworker)  generate my_fworker.yaml file{Color.END}\n"
-            f"{Color.BOLD}(a)          all{Color.END}\n"
-            f"{Color.BOLD}(q)          quit{Color.END}\n"
-        )
+        choice = input(cf.violet(f"(1/confdir)  initialize/set configuration directory\n"
+                                 f"(2/lpad)     generate my_launchpad.yaml file\n"
+                                 f"(3/db)       generate db.json file\n"
+                                 f"(4/worker)   generate my_fworker.yaml file\n"
+                                 f"(a)          all\n"
+                                 f"(q)          quit\n") +
+                       cf.yellow(f"[1/2/3/4/a/q]: ")
+                       )
         if choice in ["1", "init"]:
             generate_init_config()
         elif choice in ["2", "lpad"]:
@@ -381,7 +373,7 @@ def restart_config_wizard():
     restart = False
     while True:
         inp = input(
-            f"{Color.BOLD}Would you like to generate other configuration files? (y/n){Color.END}: "
+            "Would you like to generate other configuration files? (y/n): "
         )
         if inp in ["y", "Y", ""]:
             restart = True

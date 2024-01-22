@@ -43,7 +43,7 @@ Simply install surfflow from PyPi with the following command
 
 **Note**: `atomate` is a dependency of the `surfflow` package. However, due to some changes that either fix certain bugs or add necessary functionality yet to be implemented in the official atomate version, we use a slightly modified fork of `atomate`. This fork should be installed with
 
-`pip install git+atomate@git+https://github.com/fyalcin/atomate.git`
+`pip install atomate@git+https://github.com/MichaelWolloch/atomate.git`
 
 ### Install and configure MongoDB locally if you want your database to run also in conda environment<a name="mongodb"></a>
 

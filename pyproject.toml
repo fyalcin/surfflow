@@ -19,6 +19,7 @@ classifiers = [
 ]
 keywords = ["tribology", "surface energy", "surface", "wulff shape", "wulff construction"]
 dependencies = [
+    "atomate@git+https://github.com/MichaelWolloch/atomate.git",
     "pymatgen",
     "custodian",
     "fireworks",
@@ -26,6 +27,7 @@ dependencies = [
     "htflow-utils[workflows]",
     "custodian",
     "emmet",
+    "colorful",
 ]
 requires-python = ">=3.9"
 
