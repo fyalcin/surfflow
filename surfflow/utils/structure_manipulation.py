@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from emmet.core.mpid import MPID
+from emmet.core.summary import SummaryDoc
 from mp_api.client import MPRester
 from pymatgen.core import Structure
 from pymatgen.core.surface import Slab
@@ -10,7 +10,7 @@ from surfflow.utils.db_tools import VaspDB
 from htflow_utils.misc_tools import transfer_average_magmoms
 
 
-def get_bulk_from_mp(mpid: str, requested_fields: List[str] = None) -> Structure:
+def get_bulk_from_mp(mpid: str, requested_fields: List[str] = None) -> SummaryDoc:
     """
     Queries the conventional standard bulk structure for a material given by its
     MaterialsProject ID from the MaterialsProject API.
@@ -34,7 +34,7 @@ def get_bulk_from_mp(mpid: str, requested_fields: List[str] = None) -> Structure
             ]
         requested_fields.extend(["structure", "formula_pretty"])
 
-        doc = mpr.summary.search(material_ids=[MPID(mpid)], fields=requested_fields)[0]
+        doc = mpr.summary.search(material_ids=mpid, fields=requested_fields)[0]
     return doc
 
 

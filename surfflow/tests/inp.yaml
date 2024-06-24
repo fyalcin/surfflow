@@ -12,7 +12,7 @@ sg_params:
   max_normal_search: max
   max_nsites: 100
   miller:
-    - 001
+    - "001"
   min_thick_A: 0
   minimize_structures: false
   nn_method: all
@@ -26,4 +26,4 @@ sg_params:
   weight: BVS
 database_params:
   db_file: auto
-  high_level: true
+  high_level: test_high_surfflow
