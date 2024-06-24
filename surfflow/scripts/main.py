@@ -126,6 +126,13 @@ def cli(argv: Optional[Sequence[str]] = None) -> int:
         type=json.loads,
         help="SlabGenerator parameters given in a dict format.",
     )
+    submit_parser.add_argument(
+        "-l",
+        "--lpad-file",
+        dest="lpad_file",
+        type=str,
+        help="Path to the LaunchPad YAML file.",
+    )
     submit_parser.set_defaults(func=submit)
 
     args = parser.parse_args(argv)
