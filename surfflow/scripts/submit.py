@@ -17,7 +17,10 @@ def submit(args: Namespace) -> None:
 
     :return: None
     """
-    lpad = LaunchPad.auto_load()
+    if args.lpad_file:
+        lpad = LaunchPad.from_file(args.lpad_file)
+    else:
+        lpad = LaunchPad.auto_load()
 
     if args.filename is not None:
         try:
