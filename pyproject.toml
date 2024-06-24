@@ -19,7 +19,7 @@ classifiers = [
 ]
 keywords = ["tribology", "surface energy", "surface", "wulff shape", "wulff construction"]
 dependencies = [
-    "atomate@git+https://github.com/MichaelWolloch/atomate.git",
+    "atomate",
     "pymatgen==2023.12.18",
     "custodian",
     "fireworks",
